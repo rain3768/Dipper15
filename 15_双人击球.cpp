@@ -150,7 +150,7 @@ Circle update_Ball()
 		Ball.x = 245 + Ball_r + rand() % ((390 - Ball_r) - (245 + Ball_r) + 1);
 		Ball.y = 30 + Ball_r + rand() % ((480 - Ball_r) - (30 + Ball_r) + 1);
 	}
-	
+
 	return Ball;
 }
 
@@ -190,6 +190,7 @@ int main()
 		//绘制小球
 		setfillcolor(BLACK);
 		solidcircle(Ball.x, Ball.y, Ball_r);
+		update_Ball();
 
 		//绘制玩家
 		setfillcolor(BLACK);
