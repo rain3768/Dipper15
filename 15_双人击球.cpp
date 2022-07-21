@@ -62,19 +62,19 @@ Player update_player1()
 {
 	if (KEY_DOWN(0x41))
 		Player1.left -= player_v;
-	else if  (KEY_DOWN(0x53))
+	if  (KEY_DOWN(0x53))
 		Player1.top += player_v;
-	else if  (KEY_DOWN(0x57))
+	if  (KEY_DOWN(0x57))
 		Player1.top -= player_v;
-	else if  (KEY_DOWN(0x44))
+	if  (KEY_DOWN(0x44))
 		Player1.left += player_v;
-	else if  (Player1.left < 0)
+	if  (Player1.left < 0)
 		Player1.left = 0;
-	else if  (Player1.left > 240)
+	if  (Player1.left > 240)
 		Player1.left = 240;
-	else if  (Player1.top < 30)
+	if  (Player1.top < 30)
 		Player1.top = 30;
-	else if  (Player1.top > 430)
+	if  (Player1.top > 430)
 		Player1.top = 430;
 
 	return Player1;
@@ -83,19 +83,19 @@ Player update_player2()
 {
 	if (KEY_DOWN(VK_LEFT))
 		Player2.left -= player_v;
-	else if (KEY_DOWN(VK_DOWN))
+	if (KEY_DOWN(VK_DOWN))
 		Player2.top += player_v;
-	else if (KEY_DOWN(VK_UP))
+	if (KEY_DOWN(VK_UP))
 		Player2.top -= player_v;
-	else if (KEY_DOWN(VK_RIGHT))
+	if (KEY_DOWN(VK_RIGHT))
 		Player2.left += player_v;
-	else if (Player2.left > 635)
+	if (Player2.left > 635)
 		Player2.left = 635;
-	else if (Player2.left < 390)
+	if (Player2.left < 390)
 		Player2.left = 390;
-	else if (Player2.top < 30)
+	if (Player2.top < 30)
 		Player2.top = 30;
-	else if (Player2.top > 430)
+	if (Player2.top > 430)
 		Player2.top = 430;
 
 	return Player2;
@@ -170,10 +170,8 @@ int main()
 	srand((unsigned)time(NULL));
 	Ball.x = 245 + Ball_r + rand() % ((390 - Ball_r) - (245 + Ball_r) + 1);
 	Ball.y =  30 + Ball_r + rand() % ((480 - Ball_r) - ( 30 + Ball_r) + 1);
-
 	Ball.x_v = Ball.y_v = 6;
 	startup();
-
 
 	Player1.left =   0, Player1.top = 200, Player1.life_color = RGB(205, 0, 0), Player1.life_num = 3,
 	Player2.left = 635, Player2.top = 200, Player2.life_color = RGB(205, 0, 0), Player2.life_num = 3;
@@ -184,8 +182,8 @@ int main()
 		clearrectangle(0, 30, 640, 480);
 
 		//绘制移动区域
-		setblockcolor(RGB(152, 245, 255),	0, 30, 245, 480);
-		setblockcolor(RGB(255, 236, 139), 390, 30, 640, 480);
+		setblockcolor(RGB(152, 245, 255),	0, 30, 245, 480);//player1
+		setblockcolor(RGB(255, 236, 139), 390, 30, 640, 480);//player2
 		
 		//绘制小球
 		setfillcolor(BLACK);
@@ -198,7 +196,7 @@ int main()
 		solidrectangle(Player2.left, Player2.top, Player2.left + recetangle_width, Player2.top + recetangle_length);
 	
 		//绘制玩家名称和血量
-		outtextxy(0, 0, L"PLAYER1");
+		outtextxy(5, 5, L"PLAYER1");
 		outtextxy(635 - textwidth(L"PLAYER2"), 5, L"PLAYER2");
 
 		//判断键位输入并更新小球位置
