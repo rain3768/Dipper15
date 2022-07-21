@@ -196,8 +196,11 @@ int main()
 		solidrectangle(Player2.left, Player2.top, Player2.left + recetangle_width, Player2.top + recetangle_length);
 	
 		//绘制玩家名称和血量
+		settextcolor(BLACK);
 		outtextxy(5, 5, L"PLAYER1");
 		outtextxy(635 - textwidth(L"PLAYER2"), 5, L"PLAYER2");
+		life_show(3, 15 + textwidth(L"PLAYER1"), 5 + (int)textheight(L"PLAYER1") / 2, Player1.life_color);
+		life_show(3, 600- textwidth(L"PLAYER2"), 5 + (int)textheight(L"PLAYER2") / 2, Player2.life_color);
 
 		//判断键位输入并更新小球位置
 		update_player1();
@@ -208,6 +211,5 @@ int main()
 	}
 
 	EndBatchDraw();
-	_getch();
 	closegraph();
 }
