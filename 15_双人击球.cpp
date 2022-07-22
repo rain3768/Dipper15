@@ -137,7 +137,6 @@ Circle update_Ball()
 	{
 		clearrectangle(0, 0, 640, 25);
 		Player1.life_num--;
-		Player1.life_color = RGB(105, 0, 0);
 		Ball.x = 245 + Ball_r + rand() % ((390 - Ball_r) - (245 + Ball_r) + 1);
 		Ball.y = 30 + Ball_r + rand() % ((480 - Ball_r) - (30 + Ball_r) + 1);
 	}
@@ -146,7 +145,6 @@ Circle update_Ball()
 	{
 		clearrectangle(0, 0, 640, 25);
 		Player2.life_num--;
-		Player2.life_color = RGB(105, 0, 0);
 		Ball.x = 245 + Ball_r + rand() % ((390 - Ball_r) - (245 + Ball_r) + 1);
 		Ball.y = 30 + Ball_r + rand() % ((480 - Ball_r) - (30 + Ball_r) + 1);
 	}
@@ -159,9 +157,7 @@ void life_show(int life_num,int start_x,int start_y,COLORREF color)
 {
 	setfillcolor(color);
 	for (int i = 0; i < life_num; i++,start_x+=10)
-	{
 		solidcircle(start_x, start_y, life_circle_r);
-	}
 }
 
 int main()
@@ -175,6 +171,7 @@ int main()
 
 	Player1.left =   0, Player1.top = 200, Player1.life_color = RGB(205, 0, 0), Player1.life_num = 3,
 	Player2.left = 635, Player2.top = 200, Player2.life_color = RGB(205, 0, 0), Player2.life_num = 3;
+	RECT r = { 0, 0, 639, 479 };//drawtext函数输出位置
 
 	while (1)
 	{
@@ -182,11 +179,11 @@ int main()
 		clearrectangle(0, 30, 640, 480);
 
 		//绘制移动区域
-		setblockcolor(RGB(152, 245, 255),	0, 30, 245, 480);//player1
+		setblockcolor(RGB(152, 245, 255), 0, 30, 245, 480);//player1
 		setblockcolor(RGB(255, 236, 139), 390, 30, 640, 480);//player2
-		
+
 		//绘制小球
-		setfillcolor(BLACK);
+		setfillcolor(RED);
 		solidcircle(Ball.x, Ball.y, Ball_r);
 		update_Ball();
 
@@ -194,22 +191,35 @@ int main()
 		setfillcolor(BLACK);
 		solidrectangle(Player1.left, Player1.top, Player1.left + recetangle_width, Player1.top + recetangle_length);
 		solidrectangle(Player2.left, Player2.top, Player2.left + recetangle_width, Player2.top + recetangle_length);
-	
+
 		//绘制玩家名称和血量
 		settextcolor(BLACK);
 		outtextxy(5, 5, L"PLAYER1");
 		outtextxy(635 - textwidth(L"PLAYER2"), 5, L"PLAYER2");
-		life_show(3, 15 + textwidth(L"PLAYER1"), 5 + (int)textheight(L"PLAYER1") / 2, Player1.life_color);
-		life_show(3, 600- textwidth(L"PLAYER2"), 5 + (int)textheight(L"PLAYER2") / 2, Player2.life_color);
+		life_show(Player1.life_num, 15 + textwidth(L"PLAYER1"), 5 + (int)textheight(L"PLAYER1") / 2, Player1.life_color);
+		life_show(Player2.life_num, 600 - textwidth(L"PLAYER2"), 5 + (int)textheight(L"PLAYER2") / 2, Player2.life_color);
 
 		//判断键位输入并更新小球位置
 		update_player1();
 		update_player2();
 		update_Ball();
 
+		//判断游戏结束
+		if (Player1.life_num == 0)
+		{
+			cleardevice();
+			drawtext(_T("Player2 Win"), &r, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+		}
+		else if (Player2.life_num == 0)
+		{
+			cleardevice();
+			drawtext(_T("Player1 Win"), &r, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+		}
+
 		Sleep(100);
 	}
 
+	_getch();
 	EndBatchDraw();
 	closegraph();
 }
